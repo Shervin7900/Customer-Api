@@ -26,15 +26,26 @@ builder.Services.AddIdentityServer()
     .AddInMemoryClients(Customer_Api.Identity.Config.Clients)
     .AddDeveloperSigningCredential();
 
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.Authority = "http://localhost:5000"; // Assuming the API runs on 5000
+        options.RequireHttpsMetadata = false;
+        options.Audience = "customer_api";
+    });
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    // You can add Swagger/OpenAPI here if needed, but FastEndpoints has its own way or uses standard ones.
 }
 
 app.UseIdentityServer();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseFastEndpoints();
 

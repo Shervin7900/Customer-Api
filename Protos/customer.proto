@@ -10,6 +10,7 @@ service CustomerService {
   rpc GetAllCustomers (Empty) returns (CustomerListResponse);
   rpc UpdateCustomer (UpdateCustomerRequest) returns (Empty);
   rpc DeleteCustomer (DeleteCustomerRequest) returns (Empty);
+  rpc SearchCustomers (SearchRequest) returns (CustomerListResponse);
 }
 
 message Empty {}
@@ -41,4 +42,9 @@ message UpdateCustomerRequest {
 
 message DeleteCustomerRequest {
   int32 id = 1;
+}
+
+message SearchRequest {
+  string name_filter = 1;
+  string email_filter = 2;
 }

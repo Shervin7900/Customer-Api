@@ -3,9 +3,11 @@ using Customer_Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Customer_Api.Models;
 using Customer_Api.Grpc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Customer_Api.Services;
 
+[Authorize]
 public class CustomerGrpcService : CustomerService.CustomerServiceBase
 {
     private readonly AppDbContext _db;
@@ -96,5 +98,32 @@ public class CustomerGrpcService : CustomerService.CustomerServiceBase
         await _db.SaveChangesAsync();
 
         return new Customer_Api.Grpc.Empty();
+    }
+
+    public override async Task<CustomerListResponse> SearchCustomers(SearchRequest request, ServerCallContext context)
+    {
+        var query = _db.Customers.AsNoTracking();
+
+        if (!string.IsNullOrEmpty(request.NameFilter))
+        {
+            query = query.Where(c => c.Name.Contains(request.NameFilter));
+        }
+
+        if (!string.IsNullOrEmpty(request.EmailFilter))
+        {
+            query = query.Where(c => c.Email.Contains(request.EmailFilter));
+        }
+
+        var customers = await query.ToListAsync();
+        var response = new CustomerListResponse();
+
+        response.Customers.AddRange(customers.Select(c => new CustomerResponse
+        {
+            Id = c.Id,
+            Name = c.Name,
+            Email = c.Email
+        }));
+
+        return response;
     }
 }
