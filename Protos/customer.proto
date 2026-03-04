@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+option csharp_namespace = "Customer_Api.Grpc";
+
+package customer;
+
+service CustomerService {
+  rpc CreateCustomer (CreateCustomerRequest) returns (CustomerResponse);
+  rpc GetCustomer (GetCustomerRequest) returns (CustomerResponse);
+  rpc GetAllCustomers (Empty) returns (CustomerListResponse);
+  rpc UpdateCustomer (UpdateCustomerRequest) returns (Empty);
+  rpc DeleteCustomer (DeleteCustomerRequest) returns (Empty);
+}
+
+message Empty {}
+
+message CreateCustomerRequest {
+  string name = 1;
+  string email = 2;
+}
+
+message GetCustomerRequest {
+  int32 id = 1;
+}
+
+message CustomerResponse {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message CustomerListResponse {
+  repeated CustomerResponse customers = 1;
+}
+
+message UpdateCustomerRequest {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message DeleteCustomerRequest {
+  int32 id = 1;
+}
