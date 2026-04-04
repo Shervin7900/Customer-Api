@@ -1,20 +1,28 @@
 using FastEndpoints;
+using FastEndpoints.Swagger;
 using Customer_Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Customer_Api.Services;
 using Customer_Api.Identity;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-                       ?? "Server=(localdb)\\mssqllocaldb;Database=CustomerApiDb;Trusted_Connection=True;MultipleActiveResultSets=true";
+                       ?? "Server=localhost;Database=CustomerApiDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=5;TrustServerCertificate=True";
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 // Fast Endpoints
 builder.Services.AddFastEndpoints();
+builder.Services.SwaggerDocument(o =>
+{
+    o.DocumentSettings = s =>
+    {
+        s.Title = "Customer API";
+        s.Version = "v1";
+    };
+});
 
 // gRPC
 builder.Services.AddGrpc();
@@ -41,6 +49,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwaggerGen();
 }
 
 app.UseIdentityServer();
