@@ -5,7 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Customer_Api</RootNamespace>
-    <DefaultItemExcludes>$(DefaultItemExcludes);modules\**</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);modules/**</DefaultItemExcludes>
+    <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,11 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\customer.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos/customer.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="modules\Base-Api\BaseApi\BaseApi.csproj" />
+    <ProjectReference Include="modules/Base-Api/BaseApi/BaseApi.csproj" />
   </ItemGroup>
 
 </Project>
