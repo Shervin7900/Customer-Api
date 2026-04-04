@@ -1,0 +1,6 @@
+services:
+  customerapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8002:8080"

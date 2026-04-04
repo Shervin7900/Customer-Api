@@ -1,0 +1,11 @@
+services:
+  customerapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Staging
+    ports:
+      - "8003:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
