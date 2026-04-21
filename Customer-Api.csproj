@@ -13,7 +13,7 @@
     <PackageReference Include="Duende.IdentityServer" Version="7.4.6" />
     <PackageReference Include="FastEndpoints" Version="8.0.1" />
     <PackageReference Include="FastEndpoints.Swagger" Version="8.0.1" />
-    <PackageReference Include="Grpc.AspNetCore" Version="2.67.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.76.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.3" />
