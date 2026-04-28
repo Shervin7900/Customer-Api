@@ -4,6 +4,7 @@ using Customer_Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Customer_Api.Services;
 using Customer_Api.Identity;
+using BaseApi.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,6 +13,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+// Add Consul
+builder.Services.AddConsulConfig(builder.Configuration);
 
 // Fast Endpoints
 builder.Services.AddFastEndpoints();
@@ -55,6 +59,9 @@ if (app.Environment.IsDevelopment())
 app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Register with Consul
+app.RegisterWithConsul(builder.Configuration, app.Lifetime);
 
 app.UseFastEndpoints();
 
